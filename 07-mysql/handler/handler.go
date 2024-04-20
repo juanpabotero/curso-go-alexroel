@@ -16,6 +16,7 @@ func ListContacts(db *sql.DB) {
 		log.Fatal(err)
 	}
 	// cerrar filas
+	// se debe cerrar porque rows es un recurso que se debe liberar
 	defer rows.Close()
 	// recorrer filas
 	for rows.Next() {
@@ -24,7 +25,8 @@ func ListContacts(db *sql.DB) {
 
 		var valueEmail sql.NullString
 
-		// escanear filas
+		// escanear filas, lee los valores de las columnas y los almacena en las variables
+		// se debe pasar el mismo numero de argumentos que las columnas seleccionadas
 		err := rows.Scan(&contact.ID, &contact.Name, &valueEmail, &contact.Phone)
 		if err != nil {
 			log.Fatal(err)
@@ -39,6 +41,10 @@ func ListContacts(db *sql.DB) {
 
 		// imprimir datos
 		fmt.Printf("ID: %d, Nombre: %s, Email: %s, Phone: %s\n", contact.ID, contact.Name, contact.Email, contact.Phone)
+	}
+	// verificar si hubo un error en rows
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
 	}
 }
 

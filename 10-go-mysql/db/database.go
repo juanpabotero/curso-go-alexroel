@@ -58,6 +58,7 @@ func TableExists(name string) bool {
 		log.Fatal(err)
 	}
 	// cerrar filas al final de la función
+	// se debe cerrar porque rows es un recurso que se debe liberar
 	defer rows.Close()
 	// si rows.Next() retorna true, la tabla existe
 	// Next avanza al siguiente registro, si puede avanzar, significa que la tabla existe

@@ -11,6 +11,8 @@ import (
 	"strings"
 
 	// _ significa que se usa el paquete pero no se llama directamente
+	// se llama indirectamente a través de la función init() del paquete
+	// previene usar metodos internos del paquete y cometer errores
 	_ "github.com/go-sql-driver/mysql"
 )
 
